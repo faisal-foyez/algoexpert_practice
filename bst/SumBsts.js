@@ -1,109 +1,41 @@
 function sumBsts(tree) {
-  // Write your code here.
-  return getTreeInfo(tree).totalSumBstNodes;
+  return sumBstsHelper(tree).bstSumNodes;
 }
 
-function getTreeInfo(tree){
+function sumBstsHelper(tree){
   if(tree === null){
-    return {
-      isBst: true,
-      maxValue: -Infinity,
-      minValue: Infinity,
-      bstSum: 0,
-      bstSize: 0,
-      totalSumBstNodes: 0
-    }
+    return { isBst:true, maxVal:-Infinity, minVal:Infinity, bstSum:0, bstSize:0, bstSumNodes:0 }
   }
+  const leftSubtree = sumBstsHelper(tree.left);
+  const rightSubtree = sumBstsHelper(tree.right);
 
-  const leftTreeInfo = getTreeInfo(tree.left);
-  const rightTreeInfo = getTreeInfo(tree.right);
+  const satisfiesBstProp = tree.value > leftSubtree.maxVal && tree.value <= rightSubtree.minVal;
+  const isBst = satisfiesBstProp && leftSubtree.isBst && rightSubtree.isBst;
 
-  const satisfiesBstProp = 
-    tree.value > leftTreeInfo.maxValue && tree.value <= rightTreeInfo.minValue;
-  const isBst = satisfiesBstProp && leftTreeInfo.isBst && rightTreeInfo.isBst;
+  const maxVal = Math.max(tree.value, leftSubtree.maxVal, rightSubtree.maxVal);
+  const minVal = Math.min(tree.value, leftSubtree.minVal, rightSubtree.minVal);
 
-  const maxValue = Math.max(tree.value, Math.max(leftTreeInfo.maxValue, rightTreeInfo.maxValue));
-  const minValue = Math.min(tree.value, Math.min(leftTreeInfo.minValue, rightTreeInfo.minValue));
+  let bstSumNodes = leftSubtree.bstSumNodes + rightSubtree.bstSumNodes;
 
-  let bstSum = 0;
+  let bstSum = 0; 
   let bstSize = 0;
-
-  let totalSumBstNodes = leftTreeInfo.totalSumBstNodes + rightTreeInfo.totalSumBstNodes;
-
+  
   if(isBst){
-    bstSum = tree.value + leftTreeInfo.bstSum + rightTreeInfo.bstSum;
-    bstSize = 1 + leftTreeInfo.bstSize + rightTreeInfo.bstSize;
+    bstSum = tree.value + leftSubtree.bstSum + rightSubtree.bstSum;
+    bstSize = 1 + leftSubtree.bstSize + rightSubtree.bstSize;
 
-    if(bstSize >= 3) totalSumBstNodes = bstSum;
+    if(bstSize >= 3){
+      bstSumNodes = bstSum
+    }
   }
-
-  return {
-      isBst,
-      maxValue,
-      minValue,
-      bstSum,
-      bstSize,
-      totalSumBstNodes
-    }
-}
-
-
-const tree = {
-  value:20,
-  left:{
-    value:7,
-    left:{
-      value:2,
-      left:null,
-      right:null
-    },
-    right:{
-      value:8,
-      left:{
-        value:7,
-        left:null,
-        right:null
-      },
-      right:{
-        value:9,
-        left:null,
-        right:null
-      }
-    }
-  },
-  right:{
-    value:10,
-    left:{
-      value:5,
-      left:{
-        value:2,
-        left:null,
-        right:null
-      },
-      right:{
-        value:5,
-        left:null,
-        right:null
-      }
-    },
-    right:{
-      value:15,
-      left:{
-        value:13,
-        left:null,
-        right:{
-          value:14,
-          left:null,
-          right:null
-        }
-      },
-      right:{
-        value:8,
-        left:null,
-        right:null
-      }
-    }
+  return{
+    isBst,
+    maxVal,
+    minVal,
+    bstSum,
+    bstSize,
+    bstSumNodes
   }
 }
 
-console.log(sumBsts(tree));
+
