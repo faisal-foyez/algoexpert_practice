@@ -21,9 +21,6 @@ function nodeDepthsWithoutRecursion(root){
   return result;
 } 
 
-
-
-
 const tree = {
   value:1,
   left:{

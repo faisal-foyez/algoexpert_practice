@@ -73,44 +73,46 @@
 
 // time O(n) | space(1)
 function longestBalancedSubstring(string){
-    let openingCount = 0, closingCount = 0, currentLength, maxLength=0;
+    let maxLength=0;
+  
+    let openingCount = 0; 
+    let closingCount = 0; 
 
-    //traverse left to right;
-    for(let i = 0; i < string.length; i++){
-        let char = string[i];
-        if(char === '('){
-            openingCount += 1;
-        }
-        else if(char === ')'){
-            closingCount += 1;
-            if(openingCount === closingCount){
-                currentLength = closingCount * 2;
-                maxLength = maxLength < currentLength ? currentLength : maxLength;
-            }
-            else if(closingCount > openingCount){
-                openingCount = 0; closingCount = 0; currentLength = 0; //resetting the initial values.
-            }
-        }
-    }
-    //traverse right to left;
-    for(let i = string.length-1; i >= 0; i--){
-        let char = string[i];
-        if(char === ')'){
-            closingCount += 1;
-        }
-        else if(char === '('){
-            openingCount += 1;
-            if(openingCount === closingCount){
-                currentLength = closingCount * 2;
-                maxLength = maxLength < currentLength ? currentLength : maxLength;
-            }
-            else if(openingCount > closingCount){
-                openingCount = 0;
-                closingCount = 0;
-                currentLength = 0;
-            }
-        }
+    //Traverse left to right
+    for(const char of string){
+      if(char === '('){
+        openingCount++;
+      }else{
+        closingCount++;
+      }
+  
+      if(openingCount === closingCount){
+        maxLength = Math.max(maxLength, closingCount * 2);
+      }else if(closingCount > openingCount){
+        openingCount = 0;
+        closingCount = 0;
+      }
     }
 
+    openingCount = 0;
+    closingCount = 0;
+    //Traverse right to left;
+    for(let i = string.length - 1; i >= 0; i--){
+      const char = string[i];
+      if(char === '('){
+        openingCount++;
+      }else{
+        closingCount++;
+      }
+  
+      if(openingCount === closingCount){
+        maxLength = Math.max(maxLength, openingCount * 2);
+      }else if(openingCount > closingCount){
+        openingCount = 0;
+        closingCount = 0;
+      }
+    }
+  
     return maxLength;
-}
+  }
+  

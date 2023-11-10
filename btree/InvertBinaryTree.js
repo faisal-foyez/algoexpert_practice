@@ -1,22 +1,22 @@
 
 
-// function invertBinaryTree(node){
-//   const queue = [node];
-//   while(queue.length){
-//     const currentNode = queue.shift();
+function invertBinaryTree(node){
+  const queue = [node];
+  while(queue.length){
+    const currentNode = queue.shift();
   
-//     const left = currentNode.left;
-//     const right = currentNode.right;
+    const left = currentNode.left;
+    const right = currentNode.right;
     
-//     currentNode.right = left;
-//     currentNode.left = right;
+    currentNode.right = left;
+    currentNode.left = right;
 
-//     left && queue.push(left);
-//     right && queue.push(right);
+    left && queue.push(left);
+    right && queue.push(right);
 
-//   }
-//   return node;
-// }
+  }
+  return node;
+}
 
 function invertBinaryTree(node){
   invertBinaryTreeHelper(node);

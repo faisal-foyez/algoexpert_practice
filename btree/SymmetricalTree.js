@@ -4,7 +4,7 @@ function symmetricalTree(tree){
 
 function findSymmetricalTree(left,right){
   if(left !== null && right !== null && left.value === right.value){
-    return findSymmetricalTree(tree1.left, tree2.right) && findSymmetricalTree(tree1.right, tree2.left);
+    return findSymmetricalTree(left.left, right.right) && findSymmetricalTree(left.right, right.left);
   }
 
   return left === right;
