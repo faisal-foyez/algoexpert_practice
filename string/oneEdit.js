@@ -1,23 +1,23 @@
-// function oneEdit(stringOne, stringTwo){
-//     const lengthOne = stringOne.length;
-//     const lengthTwo = stringTwo.length;
+function oneEdit(stringOne, stringTwo){
+    const lengthOne = stringOne.length;
+    const lengthTwo = stringTwo.length;
 
-//     if(Math.abs(lengthOne - lengthTwo) > 1) return false;
+    if(Math.abs(lengthOne - lengthTwo) > 1) return false;
 
-//     for(let i=0; i<Math.min(lengthOne, lengthTwo); i++){
-//         if(stringOne[i] !== stringTwo[i]){
-//             if(lengthOne > lengthTwo){
-//                 return stringOne.slice(i+1) === stringTwo.slice(i);
-//             }else if(stringOne.length < stringTwo.length){
-//                 return stringTwo.slice(i+1) === stringOne.slice(i);
-//             }else{
-//                 return stringTwo.slice(i+1) === stringOne.slice(i+1)
-//             }
-//         }
-//     }
+    for(let i=0; i<Math.min(lengthOne, lengthTwo); i++){
+        if(stringOne[i] !== stringTwo[i]){
+            if(lengthOne > lengthTwo){
+                return stringOne.slice(i+1) === stringTwo.slice(i);
+            }else if(stringOne.length < stringTwo.length){
+                return stringTwo.slice(i+1) === stringOne.slice(i);
+            }else{
+                return stringTwo.slice(i+1) === stringOne.slice(i+1)
+            }
+        }
+    }
 
-//     return true;
-// }
+    return true;
+}
 
 function oneEdit(stringOne, stringTwo){
     const lengthOne = stringOne.length;

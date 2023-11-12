@@ -1,68 +1,63 @@
-
-function underScorifySubstring(bigString, smallString){
-    const locations = collapseLocations(findLocations(bigString,smallString));
-    return underScorify(bigString,locations);
-}
-
-function underScorify(bigString, locations){
-    let locationIdx = 0;
-    let stringIdx = 0;
-    let i = 0;
-    let finalString = [];
-
-    while( stringIdx < bigString.length && locationIdx < locations.length){
-        let [start, end] = locations[locationIdx];
-        if(stringIdx === start){
-            finalString.push('_')
-        }else if(stringIdx === end){
-            finalString.push('_');
-            locationIdx++;
-        }
-        finalString.push(bigString[stringIdx]);
-        stringIdx++;
-
-    }
-    if(stringIdx < bigString.length){
-        finalString.push(bigString.slice(stringIdx))
-    }
-    else if(locationIdx < locations.length){
-        finalString.push('_')
-    }
-    return finalString.join('');
-}
-
-function findLocations(bigString, smallString){
+function underscorifySubstring(string, substring){
+    const locations = collapse(getLocations(string, substring));
+    return underscorify(string, locations); 
+  }
+  
+  function getLocations(string,substring){
+    const locations = [];
     let startIdx = 0;
-    let locations = [];
-    while(startIdx < bigString.length){
-        const nextIdx = bigString.indexOf(smallString, startIdx);
-        if(nextIdx !== -1){
-            locations.push([nextIdx, nextIdx+smallString.length])
-            startIdx = nextIdx + 1
-        }
-        else{
-            break;
-        }
+  
+    while(startIdx < string.length){
+      const nextIdx = string.indexOf(substring, startIdx);
+      if(nextIdx !== -1){
+        locations.push([nextIdx, nextIdx + substring.length]);
+        startIdx = nextIdx + 1;
+      }else{
+        break;
+      }
     }
     return locations;
-}
-    
-function collapseLocations(locations){
-    if(!locations.length) return 
-
-    let newLocations = [locations[0]];
-    let previousLocation = newLocations[0];
-    for(let i=1; i<locations.length; i++){
-        currentLocation = locations[i]
-
-        if(currentLocation[0] <= previousLocation[1]){
-            previousLocation[1] = currentLocation[1]
-        }else{
-            newLocations.push(currentLocation);
-            previousLocation = currentLocation;
-        }
+  }
+  
+  function collapse(locations) {
+    if(!locations.length) return locations;
+    const newLocations = [locations[0]];
+    let previous = newLocations[0];
+    for(let i=1; i < locations.length; i++){
+      const current = locations[i];
+      if(current[0] <= previous[1]){
+        previous[1] = current[1];
+      }else{
+        newLocations.push(current);
+        previous = current;
+      }
     }
-    return newLocations;
-}
+    return newLocations
+  }
+  
+  function underscorify(string, locations) {
+    let locationsIdx = 0;
+    let stringIdx = 0;
+    let inBetweenUnderscores = false;
+    const finalChars = [];
+    let i=0;
+    while (stringIdx < string.length && locationsIdx < locations.length) {
+      if(stringIdx === locations[locationsIdx][i]){
+        finalChars.push('_');
+        inBetweenUnderscores = !inBetweenUnderscores;
+        if(!inBetweenUnderscores) locationsIdx++;
+        i = i === 1 ? 0 : 1;
+      }
+      finalChars.push(string[stringIdx]);
+      stringIdx++;
+    }
+    if(locationsIdx < locations.length){
+      finalChars.push('_');
+    }else if(stringIdx < string.length){
+      finalChars.push(string.slice(stringIdx));
+    }
+    return finalChars.join('');
+  }
+  
 
 console.log(underScorifySubstring('testthis is a testtest to see if testtesttest it works','test'));
