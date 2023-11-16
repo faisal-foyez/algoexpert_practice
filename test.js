@@ -7,28 +7,18 @@
 
 
 
-function getUnvisitedNeighbors(i,j,matrix,visited) {
-  const unvisitedNeighbors = [];
-  const adjacentCells = [
-    [0,1],
-    [1,0],
-    [-1,0],
-    [0,-1]
-  ];
+function getNeighbors(matrix, i, j) {
   
-  for(let [cellRow,cellCol] of adjacentCells){
-    const row = i + cellRow;
-    const col = j + cellCol;
+  const neighbors = [];
+  const neighborCells = [[0,1],[1,0],[-1,0],[0,-1]];
+  
+  for(let [cellRow, cellCol] of neighborCells){
+    const row = cellRow + i;
+    const col = cellCol + j;
 
-    if(row < 0 || 
-      i+cellRow >= matrix.length || 
-      col < 0 || 
-      col >= matrix[0].length) continue;
+    if(row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length) continue;
 
-    if(visited[row][col])
-      continue;
-
-    unvisitedNeighbors.push([row,col])
+    neighbors.push([row,col])
   }
-  return unvisitedNeighbors;
+  return neighbors;
 }
