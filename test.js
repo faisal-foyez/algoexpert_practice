@@ -16,7 +16,8 @@ function getNeighbors(matrix, i, j) {
     const row = cellRow + i;
     const col = cellCol + j;
 
-    if(row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length) continue;
+    if(row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length) 
+      continue;
 
     neighbors.push([row,col])
   }
