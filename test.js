@@ -1,25 +1,36 @@
 
-
-
-
-
-
-
-
-
-function getNeighbors(matrix, i, j) {
+function getAdjacentPositions(row,col,matrix) {
+  let adjacentPositions = [];
   
-  const neighbors = [];
-  const neighborCells = [[0,1],[1,0],[-1,0],[0,-1]];
-  
-  for(let [cellRow, cellCol] of neighborCells){
-    const row = cellRow + i;
-    const col = cellCol + j;
+  const adjacentCells = [
+    [0,1],
+    [1,0],
+    [-1,0],
+    [0,-1]
+  ]
+  for(let [cellRow, cellCol] of adjacentCells){
+    const adjacentRow = cellRow + row;
+    const adjacentCol = cellCol + col;
 
-    if(row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length) 
-      continue;
-
-    neighbors.push([row,col])
+    if(adjacentRow >= 0 && 
+      adjacentRow < matrix.length && 
+      adjacentCol >=0 && 
+      adjacentCol < matrix[0].length)
+      {
+        adjacentPositions.push([adjacentRow, adjacentCol]);
+      }
   }
-  return neighbors;
+  return adjacentPositions;
+}
+
+function getAllPositiveNumbers(matrix){
+  let positiveNumbers = [];
+  for(let row = 0; row < matrix.length; row++){
+    for(let col = 0; col < matrix[0].length; col++){
+      if(matrix[row][col] > 0){
+        positiveNumbers.push([row,col])
+      }
+    } 
+  }
+  return positiveNumbers;
 }
